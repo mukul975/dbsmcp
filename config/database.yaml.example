@@ -1,0 +1,154 @@
+# Database MCP Server Configuration
+
+# Server settings
+server:
+  name: "database-mcp-server"
+  version: "1.0.0"
+  debug: false
+  log_level: "INFO"
+  port: 8080
+
+# Security settings
+security:
+  encryption_key: "${DB_ENCRYPTION_KEY}"
+  credential_store_path: "~/.dbmcp/credentials"
+  audit_log_path: "logs/audit.log"
+  enable_sql_injection_protection: true
+  enable_query_logging: true
+
+# Connection pools
+connection_pools:
+  default_pool_size: 10
+  max_pool_size: 50
+  pool_timeout: 30
+  pool_recycle: 3600
+
+# Database configurations
+databases:
+  # MySQL Configuration
+  mysql:
+    enabled: true
+    default_connection:
+      host: "localhost"
+      port: 3306
+      username: "${MYSQL_USER}"
+      password: "${MYSQL_PASSWORD}"
+      database: "${MYSQL_DATABASE}"
+    pool_size: 10
+    charset: "utf8mb4"
+    connect_timeout: 30
+    
+  # PostgreSQL Configuration
+  postgresql:
+    enabled: true
+    default_connection:
+      host: "localhost"
+      port: 5432
+      username: "${POSTGRES_USER}"
+      password: "${POSTGRES_PASSWORD}"
+      database: "${POSTGRES_DATABASE}"
+    pool_size: 10
+    sslmode: "prefer"
+    connect_timeout: 30
+    
+  # MongoDB Configuration
+  mongodb:
+    enabled: true
+    default_connection:
+      host: "localhost"
+      port: 27017
+      username: "${MONGO_USER}"
+      password: "${MONGO_PASSWORD}"
+      database: "${MONGO_DATABASE}"
+      auth_source: "admin"
+    pool_size: 10
+    connect_timeout: 30
+    
+  # SQLite Configuration
+  sqlite:
+    enabled: true
+    default_connection:
+      database: "${SQLITE_DATABASE_PATH}"
+    pool_size: 5
+    
+  # Redis Configuration
+  redis:
+    enabled: true
+    default_connection:
+      host: "localhost"
+      port: 6379
+      password: "${REDIS_PASSWORD}"
+      database: 0
+    pool_size: 10
+    
+  # Cassandra Configuration
+  cassandra:
+    enabled: false
+    default_connection:
+      hosts: ["localhost"]
+      port: 9042
+      username: "${CASSANDRA_USER}"
+      password: "${CASSANDRA_PASSWORD}"
+      keyspace: "${CASSANDRA_KEYSPACE}"
+    pool_size: 10
+
+# Natural Language Processing
+nlp:
+  enabled: true
+  model: "en_core_web_sm"
+  confidence_threshold: 0.7
+  max_query_length: 1000
+
+# Query optimization
+query_optimization:
+  enabled: true
+  explain_plans: true
+  suggest_indexes: true
+  detect_slow_queries: true
+  slow_query_threshold: 1000  # milliseconds
+
+# Monitoring and metrics
+monitoring:
+  enabled: true
+  prometheus_endpoint: "/metrics"
+  health_check_endpoint: "/health"
+  collect_query_metrics: true
+  collect_connection_metrics: true
+
+# Backup and restore
+backup:
+  enabled: true
+  default_backup_path: "backups/"
+  compression: "gzip"
+  retention_days: 30
+
+# Migration settings
+migration:
+  enabled: true
+  migration_table: "_schema_migrations"
+  auto_migrate: false
+  backup_before_migrate: true
+
+# Rate limiting
+rate_limiting:
+  enabled: true
+  requests_per_minute: 100
+  requests_per_hour: 1000
+  burst_limit: 10
+
+# Logging configuration
+logging:
+  level: "INFO"
+  format: "json"
+  file_path: "logs/database-mcp.log"
+  max_file_size: "100MB"
+  backup_count: 5
+  
+# Features
+features:
+  schema_introspection: true
+  query_caching: true
+  connection_testing: true
+  data_masking: true
+  query_validation: true
+  performance_analytics: true
